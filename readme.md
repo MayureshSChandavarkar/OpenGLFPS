@@ -1,1 +1,1 @@
-building a simple FPS from scratch using just simple OpenGL+GLFW. nothing extraordinary. just a simple low poly, point and shoot FPS
+building a simple FPS from scratch using just simple OpenGL+GLFW, just to kill time till i get a job. nothing extraordinary. just a simple low poly, point and shoot FPS. 
