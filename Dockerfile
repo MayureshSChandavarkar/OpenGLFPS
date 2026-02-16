@@ -1,33 +1,27 @@
+# Use a lightweight Linux image with C++ tools
 FROM ubuntu:latest
 
+# Prevent interactive prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 1. Install standard tools + Graphical Support
-# We install 'novnc' and 'websockify' explicitly
+# Install Build Tools and OpenGL Dependencies
+# We install:
+# - build-essential: GCC/G++ compilers
+# - cmake: The build system
+# - libglfw3-dev: Windowing library
+# - libglm-dev: Math library
+# - git: version control
 RUN apt-get update && apt-get install -y \
-    build-essential cmake git \
-    libglfw3-dev libglm-dev xorg-dev libgl1-mesa-dev \
-    xvfb x11vnc fluxbox novnc python3-websockify python3-numpy \
-    net-tools
+    build-essential \
+    cmake \
+    git \
+    libglfw3-dev \
+    libglm-dev \
+    xorg-dev \
+    libgl1-mesa-dev
 
-# 2. Setup the environment for the web view
-ENV DISPLAY=:0
-ENV XRES=1280x720x24
-
-# 3. Create the startup script
-# NOTICE THE CHANGE below: We use 'novnc_proxy' instead of 'launch.sh'
-RUN echo '#!/bin/bash\n\
-rm -f /tmp/.X0-lock\n\
-Xvfb :0 -screen 0 $XRES &\n\
-sleep 1\n\
-fluxbox &\n\
-x11vnc -display :0 -forever -shared -rfbport 5900 -nopw &\n\
-/usr/share/novnc/utils/novnc_proxy --vnc localhost:5900 --listen 6080\n\
-' > /start.sh && chmod +x /start.sh
-
+# Set the working directory inside the container
 WORKDIR /app
 
-# Expose the web port
-EXPOSE 6080
-
-CMD ["/start.sh"]
+# By default, when you run this container, it will try to build your game
+CMD ["/bin/bash"]
