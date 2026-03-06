@@ -1,0 +1,2 @@
+# Dev log - 7/9/26
+    i hate this fucking mac. Cant even run simple Graphics API without a compatibility layer. i badly need a alternative system to continue the progress!!!! i have been stopped from using the college system too :")
